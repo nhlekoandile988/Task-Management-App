@@ -2,21 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryAKL;
-use App\Models\TaskAKL;
+use App\Models\CategoryKAL;
+use App\Models\TaskKAL;
 use App\Models\User;
-use App\Rules\DeadlineAfterTodayAN;
+use App\Rules\DeadlineAfterTodayKAL;
 use Illuminate\Http\Request;
 
-class TaskControllerAKL extends Controller
+class TaskControllerKAL extends Controller
 {
     public function index(Request $request)
     {
-        $this->authorize('viewAny', TaskAKL::class);
+        $this->authorize('viewAny', TaskKAL::class);
 
-        $categories = CategoryAKL::orderBy('name')->get();
+        $categories = CategoryKAL::orderBy('name')->get();
 
-        $tasks = TaskAKL::with(['category', 'assignee'])
+        $tasks = TaskKAL::with(['category', 'assignee'])
             ->forUser($request->user())
             ->when($request->filled('search'), fn ($query) => $query->where(function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->search . '%')
@@ -41,68 +41,68 @@ class TaskControllerAKL extends Controller
 
     public function create()
     {
-        $this->authorize('create', TaskAKL::class);
-
+        $this->authorize('create', TaskKAL::class);
         return view('tasks.create', $this->formData());
     }
 
     public function store(Request $request)
     {
-        $this->authorize('create', TaskAKL::class);
+        $this->authorize('create', TaskKAL::class);
 
         $data = $this->validatedData($request);
+        $this->ensureAssignmentIsAllowed($request, $data);
         $data['created_by'] = $request->user()->id;
+        $taskImages = ['task-picture.jpg', 'task-picture2.jpg', 'task-picture3.jpg'];
+        $data['image'] = $taskImages[array_rand($taskImages)];
 
-        $task = TaskAKL::create($data);
+        $task = TaskKAL::create($data);
 
         return redirect()->route('tasks.confirmation', $task);
     }
 
-    public function confirmation(TaskAKL $task)
+    public function confirmation(TaskKAL $task)
     {
         $this->authorize('view', $task);
-
         return view('tasks.confirmation', compact('task'));
     }
 
-    public function show(TaskAKL $task)
+    public function show(TaskKAL $task)
     {
         $this->authorize('view', $task);
-
         return view('tasks.show', compact('task'));
     }
 
-    public function edit(TaskAKL $task)
+    public function edit(TaskKAL $task)
     {
         $this->authorize('update', $task);
-
         return view('tasks.edit', array_merge($this->formData(), compact('task')));
     }
 
-    public function update(Request $request, TaskAKL $task)
+    public function update(Request $request, TaskKAL $task)
     {
         $this->authorize('update', $task);
 
-        $task->update($this->validatedData($request));
+        $data = $this->validatedData($request);
+        $this->ensureAssignmentIsAllowed($request, $data);
+        $task->update($data);
 
         return redirect()->route('tasks.show', $task)->with('status', 'Task updated successfully.');
     }
 
-    public function destroy(TaskAKL $task)
+    public function destroy(TaskKAL $task)
     {
         $this->authorize('delete', $task);
         $task->delete();
-
         return redirect()->route('tasks.index')->with('status', 'Task deleted successfully.');
     }
 
     public function assigned(Request $request)
     {
-        $this->authorize('viewAny', TaskAKL::class);
+        $this->authorize('viewAny', TaskKAL::class);
 
-        $categories = CategoryAKL::orderBy('name')->get();
+        $categories = CategoryKAL::orderBy('name')->get();
 
-        $tasks = TaskAKL::with(['category', 'assignee'])
+        $tasks = TaskKAL::with(['category', 'assignee'])
             ->where('assigned_to', $request->user()->id)
             ->when($request->filled('search'), fn ($query) => $query->where(function ($query) use ($request) {
                 $query->where('title', 'like', '%' . $request->search . '%')
@@ -135,7 +135,7 @@ class TaskControllerAKL extends Controller
             'tags' => ['nullable', 'string', 'max:255'],
             'priority' => ['required', 'in:low,medium,high'],
             'status' => ['required', 'in:pending,in_progress,completed'],
-            'deadline' => ['nullable', 'date', new DeadlineAfterTodayAN],
+            'deadline' => ['nullable', 'date', new DeadlineAfterTodayKAL],
         ], [
             'category_id.required' => 'Please choose a task category.',
             'title.required' => 'Every task needs a clear title.',
@@ -148,7 +148,7 @@ class TaskControllerAKL extends Controller
 
     private function formatTags(?string $tags): ?array
     {
-        if (! $tags) {
+        if (!$tags) {
             return null;
         }
 
@@ -157,12 +157,18 @@ class TaskControllerAKL extends Controller
         return count($cleaned) ? array_values($cleaned) : null;
     }
 
+    private function ensureAssignmentIsAllowed(Request $request, array &$data): void
+    {
+        if (! $request->user()->isAdmin() && isset($data['assigned_to']) && $data['assigned_to'] !== null && $data['assigned_to'] !== $request->user()->id) {
+            abort(403, 'Only admins may assign a task to another team member.');
+        }
+    }
+
     private function formData()
     {
         return [
-            'categories' => CategoryAKL::orderBy('name')->get(),
+            'categories' => CategoryKAL::orderBy('name')->get(),
             'users' => User::whereIn('role', ['admin', 'team_member'])->orderBy('name')->get(),
         ];
     }
 }
-

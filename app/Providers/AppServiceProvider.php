@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\TaskAKL;
-use App\Observers\TaskObserverAN;
+use App\Models\TaskKAL;
+use App\Observers\TaskObserverKAL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        TaskAKL::observe(TaskObserverAN::class);
+        TaskKAL::observe(TaskObserverKAL::class);
     }
 }
 

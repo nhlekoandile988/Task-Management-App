@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TaskAKL extends Model
+class TaskKAL extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,7 @@ class TaskAKL extends Model
         'created_by',
         'title',
         'description',
+        'image',
         'tags',
         'priority',
         'status',
@@ -32,7 +33,7 @@ class TaskAKL extends Model
 
     public function category()
     {
-        return $this->belongsTo(CategoryAKL::class, 'category_id');
+        return $this->belongsTo(CategoryKAL::class, 'category_id');
     }
 
     public function assignee()
@@ -69,4 +70,3 @@ class TaskAKL extends Model
         $this->attributes['title'] = trim($value);
     }
 }
-

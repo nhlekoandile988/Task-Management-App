@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TaskAKL;
+use App\Models\TaskKAL;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
-class ProfileControllerAN extends Controller
+class ProfileControllerKAL extends Controller
 {
     public function show(Request $request)
     {
         $user = $request->user();
-        $personalTasksQuery = TaskAKL::with('category')
+        $personalTasksQuery = TaskKAL::with('category')
             ->where(function ($query) use ($user) {
                 $query->where('created_by', $user->id)
                     ->orWhere('assigned_to', $user->id);
@@ -31,8 +31,8 @@ class ProfileControllerAN extends Controller
         return view('profile.show', [
             'user' => $user,
             'status' => $status,
-            'tasksCreated' => TaskAKL::where('created_by', $user->id)->count(),
-            'tasksAssigned' => TaskAKL::where('assigned_to', $user->id)->count(),
+            'tasksCreated' => TaskKAL::where('created_by', $user->id)->count(),
+            'tasksAssigned' => TaskKAL::where('assigned_to', $user->id)->count(),
             'completedTasks' => (clone $personalTasksQuery)->where('status', 'completed')->count(),
             'pendingTasks' => (clone $personalTasksQuery)->where('status', 'pending')->count(),
             'inProgressTasks' => (clone $personalTasksQuery)->where('status', 'in_progress')->count(),
@@ -57,11 +57,9 @@ class ProfileControllerAN extends Controller
 
         if ($request->hasFile('avatar')) {
             $directory = public_path('profile-avatars');
-
             if (!File::isDirectory($directory)) {
                 File::makeDirectory($directory, 0755, true);
             }
-
             $filename = 'user-' . $user->id . '-' . time() . '.' . $request->file('avatar')->extension();
             $request->file('avatar')->move($directory, $filename);
             $data['avatar_path'] = 'profile-avatars/' . $filename;
@@ -92,7 +90,7 @@ class ProfileControllerAN extends Controller
             'password' => ['required', 'confirmed', Password::defaults()],
         ]);
 
-        if (! Hash::check($data['current_password'], $user->password)) {
+        if (!Hash::check($data['current_password'], $user->password)) {
             return back()->withErrors(['current_password' => 'The current password is incorrect.']);
         }
 
@@ -104,8 +102,6 @@ class ProfileControllerAN extends Controller
     public function showNotificationSettings(Request $request)
     {
         $user = $request->user();
-
         return view('profile.notification-settings', compact('user'));
     }
 }
-

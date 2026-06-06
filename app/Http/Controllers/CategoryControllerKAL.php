@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryAKL;
+use App\Models\CategoryKAL;
 use Illuminate\Http\Request;
 
-class CategoryControllerAN extends Controller
+class CategoryControllerKAL extends Controller
 {
-    private CategoryAKL $categories;
+    private CategoryKAL $categories;
 
-    public function __construct(CategoryAKL $categories)
+    public function __construct(CategoryKAL $categories)
     {
         $this->categories = $categories;
     }
@@ -33,11 +33,10 @@ class CategoryControllerAN extends Controller
         return back()->with('status', 'Category created successfully.');
     }
 
-    public function destroy(CategoryAKL $category)
+    public function destroy(CategoryKAL $category)
     {
         $category->delete();
 
         return back()->with('status', 'Category deleted successfully.');
     }
 }
-

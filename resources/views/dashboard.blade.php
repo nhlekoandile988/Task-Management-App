@@ -1,13 +1,13 @@
 <x-app-layout title="Dashboard">
-    <section class="hero-panel p-4 p-lg-5 mb-4" style="--hero-image: url('https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1600&q=85')">
+    <section class="hero-panel p-4 p-lg-5 mb-4" style="--hero-image: url('{{ asset('images/Background.jpg') }}')">
         <div class="content">
-            <div class="hero-kicker mb-2">TechFlow operations dashboard</div>
+            <div class="hero-kicker mb-2">TaskFlow operations dashboard</div>
             <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
                 <h1 class="display-6 fw-bold mb-0">Run your technology workstreams with clarity and speed.</h1>
                 <span class="badge bg-secondary">{{ auth()->user()->role_label }}</span>
             </div>
             <p class="lead mb-4">See your engineering tasks, incident response items, and delivery milestones in one technology-focused workspace.</p>
-            @can('create', App\Models\TaskAKL::class)
+            @can('create', App\Models\TaskKAL::class)
                 <div class="d-flex flex-wrap gap-2">
                     <a class="btn btn-primary btn-lg" href="{{ route('tasks.create') }}">Create task</a>
                     @if(auth()->user()->isAdmin())
@@ -31,19 +31,19 @@
     @php
         $projects = [
             [
-                'name' => 'Incident Response',
-                'task' => 'Resolve priority bugs and notify stakeholders before the next release.',
-                'image' => 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80',
+                'name' => 'Sales Leads',
+                'task' => 'Track and follow up on new customer leads and enquiries.',
+                'image' => asset('images/card1.jpg'),
             ],
             [
-                'name' => 'Release Planning',
-                'task' => 'Coordinate deployment tasks, QA checks, and rollout approvals.',
-                'image' => 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80',
+                'name' => 'Test Drives',
+                'task' => 'Schedule and manage test drive bookings for prospective buyers.',
+                'image' => asset('images/card2.jpeg'),
             ],
             [
-                'name' => 'Feature Build',
-                'task' => 'Track development, testing, and engineering review for new features.',
-                'image' => 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=900&q=80',
+                'name' => 'Vehicle Delivery',
+                'task' => 'Coordinate delivery paperwork and handover for sold vehicles.',
+                'image' => asset('images/card3.jpg'),
             ],
         ];
     @endphp
@@ -61,7 +61,7 @@
                 <div class="card vehicle-card">
                     <img src="{{ $project['image'] }}" alt="{{ $project['name'] }}">
                     <div class="card-body">
-                        <span class="badge mb-2">TechFlow</span>
+                        <span class="badge mb-2">TaskFlow</span>
                         <h3 class="h5 mb-1">{{ $project['name'] }}</h3>
                         <p class="text-muted mb-0">{{ $project['task'] }}</p>
                     </div>

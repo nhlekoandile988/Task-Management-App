@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
-class AuthControllerAN extends Controller
+class AuthControllerKAL extends Controller
 {
     public function showLogin()
     {
@@ -24,7 +24,6 @@ class AuthControllerAN extends Controller
 
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-
             return redirect()->intended(route('dashboard'));
         }
 

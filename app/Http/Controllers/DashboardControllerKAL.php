@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategoryAKL;
-use App\Models\TaskAKL;
+use App\Models\CategoryKAL;
+use App\Models\TaskKAL;
 
-class DashboardControllerAN extends Controller
+class DashboardControllerKAL extends Controller
 {
     public function __invoke()
     {
         $user = auth()->user();
-        $tasks = TaskAKL::with(['category', 'assignee'])->forUser($user)->latest()->get();
+        $tasks = TaskKAL::with(['category', 'assignee'])->forUser($user)->latest()->get();
 
         return view('dashboard', [
             'totalTasks' => $tasks->count(),
@@ -18,8 +18,7 @@ class DashboardControllerAN extends Controller
             'completedTasks' => $tasks->where('status', 'completed')->count(),
             'dueSoonTasks' => $tasks->filter(fn ($task) => $task->deadline && $task->deadline->between(today(), today()->addDays(3)))->count(),
             'recentTasks' => $tasks->take(6),
-            'categories' => CategoryAKL::withCount('tasks')->get(),
+            'categories' => CategoryKAL::withCount('tasks')->get(),
         ]);
     }
 }
-

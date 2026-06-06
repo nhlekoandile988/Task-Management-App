@@ -1,18 +1,19 @@
 <x-app-layout title="Login">
     <div class="row justify-content-center align-items-center g-4">
         <div class="col-md-6">
-            <div class="hero-panel p-4 p-lg-5" style="--hero-image: url('https://images.unsplash.com/photo-1503736334956-4c8f8e92946d?auto=format&fit=crop&w=1200&q=85')">
+            <div class="hero-panel p-4 p-lg-5" style="--hero-image: url('{{ asset('images/Background.jpg') }}')">
                 <div class="content">
-                    <div class="hero-kicker mb-2">Smart Drive</div>
-                    <h1 class="h2 fw-bold">Professional dealership task tracking.</h1>
-                    <p class="mb-0">Keep every customer, car, and deadline visible from enquiry to handover.</p>
+                    <div class="hero-kicker mb-2">TaskFlow</div>
+                    <h1 class="h2 fw-bold">Built for tech teams that move fast.</h1>
+                    <p class="mb-3">TaskFlow is a task management platform designed for technology teams. Assign, track, and deliver work across web development, mobile, cybersecurity, AI, databases, design, and networking — all in one place.</p>
+                    <p class="mb-0">Stay on top of deadlines, priorities, and team progress so nothing falls through the cracks.</p>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
             <div class="card surface-card">
                 <div class="card-body p-4">
-                    <h1 class="h4 mb-3">Login to Smart Drive</h1>
+                    <h1 class="h4 mb-3">Login to TaskFlow</h1>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="mb-3">

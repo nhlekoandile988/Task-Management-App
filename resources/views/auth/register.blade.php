@@ -3,7 +3,7 @@
         <div class="col-md-6">
             <div class="card surface-card">
                 <div class="card-body p-4">
-                    <h1 class="h4 mb-3">Create your TechFlow account</h1>
+                    <h1 class="h4 mb-3">Create your TaskFlow account</h1>
                     <p class="text-muted mb-4">Sign up and start using the app as a Team Member right away.</p>
                     <form method="POST" action="{{ route('register') }}">
                         @csrf

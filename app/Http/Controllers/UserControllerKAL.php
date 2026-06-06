@@ -5,28 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class UserControllerAN extends Controller
+class UserControllerKAL extends Controller
 {
     public function index()
     {
         $this->authorize('viewAny', User::class);
-
         $users = User::orderBy('name')->paginate(10);
-
         return view('users.index', compact('users'));
     }
 
     public function show(User $user)
     {
         $this->authorize('view', $user);
-
         return view('users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
         $this->authorize('update', $user);
-
         return view('users.edit', compact('user'));
     }
 

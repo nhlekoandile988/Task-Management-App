@@ -6,13 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class LogRequestsAN
+class LogRequestsKAL
 {
     public function handle(Request $request, Closure $next)
     {
-        Log::info('Task app request', [
+        Log::info('Incoming request', [
             'method' => $request->method(),
             'path' => $request->path(),
+            'ip' => $request->ip(),
             'user_id' => optional($request->user())->id,
         ]);
 

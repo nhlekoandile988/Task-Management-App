@@ -1,4 +1,10 @@
 <x-app-layout title="{{ $task->title }}">
+    @if(session('status'))
+        <div class="alert alert-success">{{ session('status') }}</div>
+    @endif
+    @if(session('error'))
+        <div class="alert alert-danger">{{ session('error') }}</div>
+    @endif
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-3">
         <div>
             <h1 class="h3 mb-1">{{ $task->title }}</h1>
@@ -7,6 +13,12 @@
         <div class="d-flex gap-2 flex-wrap">
             <a class="btn btn-outline-secondary" href="{{ route('tasks.index') }}">Back to Tasks</a>
             <a class="btn btn-outline-primary" href="{{ route('tasks.edit', $task) }}">Edit</a>
+            @if(auth()->user()->isAdmin() && $task->assignee)
+                <form method="POST" action="{{ route('reminders.task', $task) }}">
+                    @csrf
+                    <button class="btn btn-outline-warning" type="submit">Send deadline reminder</button>
+                </form>
+            @endif
             @can('delete', $task)
                 <form method="POST" action="{{ route('tasks.destroy', $task) }}" onsubmit="return confirm('Delete this task?')">
                     @csrf @method('DELETE')
@@ -44,6 +56,9 @@
     <div class="card surface-card">
         <div class="card-body">
             <h4 class="h5 mb-3" style="color: #1E3A5F;">Task Details</h4>
+            @if($task->image)
+                <img src="{{ asset('images/' . $task->image) }}" alt="Task image" class="img-fluid rounded mb-3" style="max-height:300px; width:100%; object-fit:cover;">
+            @endif
             <p class="mb-3 text-muted">{{ $task->description ?: 'No description provided for this task yet.' }}</p>
             @if($task->tags)
                 <div class="mb-4">

@@ -2,11 +2,11 @@
 
 namespace App\Observers;
 
-use App\Models\TaskAKL;
+use App\Models\TaskKAL;
 
-class TaskObserverAN
+class TaskObserverKAL
 {
-    public function creating(TaskAKL $task)
+    public function creating(TaskKAL $task)
     {
         if (!$task->status) {
             $task->status = 'pending';
@@ -17,4 +17,3 @@ class TaskObserverAN
         }
     }
 }
-

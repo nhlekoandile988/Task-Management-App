@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\TaskKAL;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -52,12 +53,12 @@ class User extends Authenticatable
 
     public function assignedTasks()
     {
-        return $this->hasMany(TaskAKL::class, 'assigned_to');
+        return $this->hasMany(TaskKAL::class, 'assigned_to');
     }
 
     public function createdTasks()
     {
-        return $this->hasMany(TaskAKL::class, 'created_by');
+        return $this->hasMany(TaskKAL::class, 'created_by');
     }
 
     public function getRoleLabelAttribute()

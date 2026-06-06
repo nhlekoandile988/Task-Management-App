@@ -2,12 +2,12 @@
 
 namespace App\Providers;
 
-use App\Models\TaskAKL;
-use App\Models\CategoryAKL;
+use App\Models\TaskKAL;
+use App\Models\CategoryKAL;
 use App\Models\User;
-use App\Policies\TaskPolicyAKL;
-use App\Policies\CategoryPolicyAKL;
-use App\Policies\UserPolicyAKL;
+use App\Policies\TaskPolicyKAL;
+use App\Policies\CategoryPolicyKAL;
+use App\Policies\UserPolicyKAL;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -19,9 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        TaskAKL::class => TaskPolicyAKL::class,
-        CategoryAKL::class => CategoryPolicyAKL::class,
-        User::class => UserPolicyAKL::class,
+        TaskKAL::class => TaskPolicyKAL::class,
+        CategoryKAL::class => CategoryPolicyKAL::class,
+        User::class => UserPolicyKAL::class,
     ];
 
     /**
@@ -33,7 +33,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('manage-users-akl', fn ($user) => $user->role === 'admin');
+        Gate::define('manage-users-kal', fn ($user) => $user->role === 'admin');
     }
 }
 

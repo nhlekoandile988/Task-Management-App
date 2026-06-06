@@ -2,16 +2,16 @@
 
 namespace App\Notifications;
 
-use App\Models\TaskAKL;
+use App\Models\TaskKAL;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class TaskDeadlineReminderAN extends Notification
+class TaskDeadlineReminderKAL extends Notification
 {
     use Queueable;
 
-    public function __construct(private TaskAKL $task)
+    public function __construct(private TaskKAL $task)
     {
     }
 
@@ -34,4 +34,3 @@ class TaskDeadlineReminderAN extends Notification
             ->line('Please update the task status after progress is made.');
     }
 }
-

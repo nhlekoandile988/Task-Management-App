@@ -2,21 +2,21 @@
 
 namespace App\Console\Commands;
 
-use App\Models\TaskAKL;
-use App\Notifications\TaskDeadlineReminderAN;
+use App\Models\TaskKAL;
+use App\Notifications\TaskDeadlineReminderKAL;
 use Illuminate\Console\Command;
 
-class SendDeadlineRemindersAN extends Command
+class SendDeadlineRemindersKAL extends Command
 {
-    protected $signature = 'smartdrive:send-deadline-reminders {--days=2 : Number of days ahead to check}';
+    protected $signature = 'taskflow:send-deadline-reminders {--days=2 : Number of days ahead to check}';
 
-    protected $description = 'Send email deadline reminders for Smart Drive tasks that are due soon.';
+    protected $description = 'Send email deadline reminders for TaskFlow tasks that are due soon.';
 
     public function handle()
     {
         $days = (int) $this->option('days');
 
-        $tasks = TaskAKL::with('assignee')
+        $tasks = TaskKAL::with('assignee')
             ->whereNotNull('assigned_to')
             ->whereNull('reminder_sent_at')
             ->whereIn('status', ['pending', 'in_progress'])
@@ -24,7 +24,7 @@ class SendDeadlineRemindersAN extends Command
             ->get();
 
         foreach ($tasks as $task) {
-            $task->assignee->notify(new TaskDeadlineReminderAN($task));
+            $task->assignee->notify(new TaskDeadlineReminderKAL($task));
             $task->forceFill(['reminder_sent_at' => now()])->save();
         }
 
@@ -33,4 +33,3 @@ class SendDeadlineRemindersAN extends Command
         return self::SUCCESS;
     }
 }
-

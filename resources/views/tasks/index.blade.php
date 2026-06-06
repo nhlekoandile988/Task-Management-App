@@ -7,7 +7,7 @@
                 </h2>
                 <p class="text-muted mb-0">Search, filter, and manage tasks across your projects.</p>
             </div>
-            @can('create', App\Models\TaskAKL::class)
+            @can('create', App\Models\TaskKAL::class)
                 <a href="{{ route('tasks.create') }}" class="btn btn-primary" style="background-color: #1E3A5F; border-color: #1E3A5F;">
                     <i class="bi bi-plus-circle me-2"></i>Create Task
                 </a>
@@ -175,7 +175,7 @@
                         You haven't created any tasks yet.
                     @endif
                 </p>
-                @can('create', App\Models\TaskAKL::class)
+                @can('create', App\Models\TaskKAL::class)
                     <a href="{{ route('tasks.create') }}" class="btn btn-primary" style="background-color: #1E3A5F; border-color: #1E3A5F;">
                         <i class="bi bi-plus-circle me-2"></i>Create First Task
                     </a>

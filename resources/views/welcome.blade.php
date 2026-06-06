@@ -1,11 +1,11 @@
-﻿<x-app-layout title="TechFlow">
+<x-app-layout title="TaskFlow">
     <div class="row align-items-center py-5">
         <div class="col-lg-6">
-            <div class="hero-panel" style="--hero-image: url('https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?auto=format&fit=crop&w=1200&q=80')">
+            <div class="hero-panel" style="--hero-image: url('{{ asset('images/Background.jpg') }}')">
                 <div class="content p-5 p-lg-6">
                     <div class="hero-kicker mb-3">Technology Operations</div>
-                    <h1 class="display-6 fw-bold mb-3">Build smarter workflows for your engineering and operations teams.</h1>
-                    <p class="lead text-white mb-4">TechFlow brings task management, team coordination, and delivery tracking together for modern technology organizations.</p>
+                    <h1 class="display-6 fw-bold mb-3">Build smarter workflows for your tech teams.</h1>
+                    <p class="lead text-white mb-4">TaskFlow brings task management, team coordination, and delivery tracking together for modern technology organizations.</p>
                     <div class="d-flex flex-column flex-sm-row gap-2">
                         <a class="btn btn-primary btn-lg" href="{{ route('login') }}">Login</a>
                         <a class="btn btn-outline-light btn-lg" href="{{ route('register') }}">Create Account</a>

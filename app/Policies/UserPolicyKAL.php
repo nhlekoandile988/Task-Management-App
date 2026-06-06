@@ -4,7 +4,7 @@ namespace App\Policies;
 
 use App\Models\User;
 
-class UserPolicyAKL
+class UserPolicyKAL
 {
     public function viewAny(User $user)
     {
@@ -31,4 +31,3 @@ class UserPolicyAKL
         return $user->role === 'admin' && $user->id !== $model->id;
     }
 }
-
