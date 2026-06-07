@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Drive - Laravel Task Management App
 
 Smart Drive is a Laravel task management application for a car dealership sales team. It helps staff track customer leads, test drives, finance applications, delivery paperwork, and after-sales follow-ups.
@@ -108,3 +109,6 @@ Vehicle image source: Unsplash car photography embedded through remote image URL
 6. Update the task status from Pending to In Progress to Completed.
 7. Send deadline reminder emails from the dashboard or by running `php artisan smartdrive:send-deadline-reminders`.
 8. Login as Guest Viewer and confirm restricted controls.
+=======
+# Task-Management-App
+>>>>>>> 17e21cf15ef972876851df5611edfee31edb89b2
