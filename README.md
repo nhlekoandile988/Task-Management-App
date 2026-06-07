@@ -55,8 +55,8 @@ The Task Management Application is a Laravel-based web application that allows u
 | Laravel | Backend Framework |
 | PHP | Programming Language |
 | Blade | Templating Engine |
-| Bootstrap/Tailwind CSS | User Interface |
-| MySQL/SQLite | Database |
+| Bootstrap | User Interface |
+| SQLite | Database |
 | Laravel Breeze | Authentication |
 | Composer | Dependency Management |
 
